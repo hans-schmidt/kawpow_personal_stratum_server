@@ -1,7 +1,7 @@
 
 
-KPSS - Kawpow Personal Stratum Server
-#####################################
+# KPSS - Kawpow Personal Stratum Server
+
 
 KPSS is a high performance Stratum server in Node.js. One instance of this software can startup and 
 manage multiple mining instances, each with their own daemon and stratum port.
@@ -9,7 +9,7 @@ manage multiple mining instances, each with their own daemon and stratum port.
 KPSS is stratum server for solo mining without a pool. It sits between your mining software and the ravend 
 core node server. 
 
-Your miner (kawpowminer) talks to your GPU card on one side (using CUDA or Open-CL) and KPSS on the 
+Your miner (kawpowminer) talks to your GPU card on one side (using CUDA or Open-CL) and to KPSS on the 
 other side (using Stratum). Meanwhile, KPSS is also talking to ravend on its other side using the core RPC
 JSON commands.
 
@@ -32,8 +32,7 @@ closed-source miners because it does not currently implement the "mining.extrano
 command. 
 
 
-Installation Instructions
-=========================
+## Installation Instructions
 
 It is possible and easiest to put all the pieces on one machine. But I did this work with the following
 setup.
@@ -46,15 +45,17 @@ setup.
 		everything working. If you have trouble, throw that VM away and start over. I assume you have
 		ssh access.
 
-The Ravencoin core node VM
---------------------------
--make sure it is running and fully synced. The raven.conf file might look like this:
+## The Ravencoin core node VM
+
+Make sure it is running and fully synced. The raven.conf file might look like this:
+```	
 	testnet=1
 	server=1
 	rpcuser=my-user-id
 	rpcpassword=my-passw
 	miningaddress=mufpGCucKyxh1ahcaCAqp6URzhdTnoJaas
 	rpcallowip=127.0.0.1
+```
 	
 	Notes:
 	-the rpcallowip provides security. We will give remote access via ssh in the next step
@@ -62,31 +63,38 @@ The Ravencoin core node VM
 		does not provide all the information needed by the miner
 	-make sure that you reboot the node after making changes to raven.conf so that they get read
 
--bring access to the ravend RPC API port to your Windows system by forwarding the port privately via ssh
-	example for testnet: 
+Bring access to the ravend RPC API port to your Windows system by forwarding the port privately via ssh
+
+	-example for testnet: 
 	ssh -i path-to-my-key -L 18766:localhost:18766 my-user-id@my-ravend-ip-address
 		
 		
-Kawpow Personal Stratum Server
-------------------------------
+## Kawpow Personal Stratum Server
+
 
 Make sure that you have the dependencies installed:
+
 	sudo apt-get update
 	sudo apt-get install curl python2.7 build-essential libssl-dev
 	sudo ln -s /usr/bin/python2.7 /usr/bin/python
 	
 Now install the Node version manager:
+
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
 After running curl to install NVM, you should see in your output something like:
 	=> Appending nvm source string to /home/ubuntu/.bashrc
 
 To use NVM, you'll first need to restart your terminal or reload .bashrc:
+
 	source /home/ubuntu/.bashrc
 
 We want to use Node.js 8.1.4 so run:
+
 	nvm install v8.1.4
 
 Now let's install KPSS into your home directory
+
 	cd ~
 	mkdir stratum-server
 	cd stratum-server
@@ -96,6 +104,7 @@ Now let's install KPSS into your home directory
 	
 Hopefully that install and build all went smoothly
 Now just copy the result over for Node.js:
+
 	mv kawpow_personal_stratum_server node_modules/kawpow_personal_stratum_server
 	
 That should complete the installation of KPSS.
@@ -108,6 +117,7 @@ Before launching KPSS, we need to forward the appropriate ports for KPSS.
 didn't change it in "server.js")
 -KPSS needs access to ravend RPC (on port 18766 for testnet).
 We can accomplish both of those by running the following on the Windows box
+
 	example for testnet: 
 	ssh -i path-to-mykey -R 18766:localhost:18766 -L 3333:localhost:3333 my-user-id@my-kpss-ip-address
 
@@ -116,22 +126,27 @@ That's it! It should be ready to go.
 For testing purposes, you might want to copy a linux raven-cli executable over to the KPSS
 VM box for testing the connection to the ravend RPC API.
 -From the KPSS VM, you should be able to run the following and get a good response:
+
 	./raven-cli -rpcuser=my-user-id -rpcpassword=my-passwd -testnet getblocktemplate
+	
 -Note that the answer from ravend MUST end in providing "pprpcheader" and "pprpcepoch"
 values. If it ends prematurely with the "default_witness_commitment" value then the
 "miningaddress" parameter was not recognized by ravend and mining won't work.
 	
-Mining
-------
+## Mining
+
 
 To run KPSS, enter the following on the KPSS VM:
+
 	node server.js
 	
 Then on the Windows box, launch the miner. For example:
+
 	./kawpowminer.exe -U -P stratum+tcp://mufpGCucKyxh1ahcaCAqp6URzhdTnoJaas.worker@127.0.0.1:3333
 
 If you are over-mining testnet (driving up the difficulty), then you should make the following
 changes in "server.js":
+
 	"blockRefreshInterval": 60000
 	"getNewBlockAfterFound": false
 
