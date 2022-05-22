@@ -27,9 +27,8 @@ it to be an open-source solution. I also wanted to be able to throttle-back my f
 so that I could mine testnet without raising the difficulty unnecessarily high. The solution here
 accomplishes all those goals.
 
-KPSS seems to work ok with kawpowminer. Note however that it may not currenty work with many popular 
-closed-source miners because it does not currently implement the "mining.extranonce.subscribe" Stratum 
-command. 
+KPSS has been briefly tested and verified to work on testnet using Kawpowminer, TT-Miner, T-RexMiner,
+and GMiner. 
 
 
 ## Installation Instructions

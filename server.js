@@ -74,7 +74,7 @@ var pool = Stratum.createPool({
        optional and will only be used for the ports you configure it for. */
     "ports": {
         "3333": { //A port for your miners to connect to
-            "diff": 32, //the pool difficulty for this port
+            "diff": 0.1, //the pool difficulty for this port
 
             /* Variable difficulty is a feature that will automatically adjust difficulty for
                individual miners based on their hashrate in order to lower networking overhead */
