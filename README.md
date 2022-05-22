@@ -4,7 +4,8 @@
 
 
 KPSS is a high performance Stratum server in Node.js. One instance of this software can startup and 
-manage multiple mining instances, each with their own daemon and stratum port.
+manage multiple mining instances, each with their own daemon and stratum port. Thus it supports 
+multiple ports with fixed or variable difficulty as well as multiple ravend fallback instances.
 
 KPSS is stratum server for solo mining without a pool. It sits between your mining software and the ravend 
 core node server. 
