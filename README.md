@@ -28,7 +28,7 @@ so that I could mine testnet without raising the difficulty unnecessarily high. 
 accomplishes all those goals.
 
 KPSS has been briefly tested and verified to work on testnet using Kawpowminer, TT-Miner, T-RexMiner,
-and GMiner. 
+GMiner, and NBMiner.
 
 
 ## Installation Instructions
