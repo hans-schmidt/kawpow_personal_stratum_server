@@ -6,7 +6,7 @@ var myCoin = {
      "peerMagicTestnet": "52564e54"
 };
 
-var Stratum = require('stratum-pool');
+var Stratum = require('kawpow_personal_stratum_server');
 
 var pool = Stratum.createPool({
 

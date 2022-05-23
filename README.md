@@ -96,11 +96,13 @@ We want to use Node.js 8.1.4 so run:
 Now let's install KPSS into your home directory
 
 	cd ~
-	mkdir stratum-server
-	cd stratum-server
-	git clone https://github.com/hans-schmidt/kawpow_personal_stratum_server kawpow_personal_stratum_server
-	cp kawpow_personal_stratum_server/package.json package.json
-	npm install
+    mkdir kawpow_personal_stratum_server
+    cd kawpow_personal_stratum_server
+    git clone https://github.com/hans-schmidt/kawpow_personal_stratum_server
+    cp kawpow_personal_stratum_server/package.json package.json
+    cp kawpow_personal_stratum_server/server.js server.js
+    npm install
+    mv kawpow_personal_stratum_server node_modules/kawpow_personal_stratum_server
 	
 Hopefully that install and build all went smoothly
 Now just copy the result over for Node.js:
@@ -108,9 +110,13 @@ Now just copy the result over for Node.js:
 	mv kawpow_personal_stratum_server node_modules/kawpow_personal_stratum_server
 	
 That should complete the installation of KPSS.
+You will launch the app from the current directory (~/kawpow_personal_stratum_server)
 
-Now open the file "server.js" using your favorite test editor.
+Now open the file "server.js" in that directory using your favorite test editor.
 Read this file carefully and change all configuration parameters to your choices.
+The only items which you MUST change are:
+    "address" and "rewardRecipients" near the top so that the proper addresses get paid, and
+    "user" and "password" near the middle so that the core node RPC API can be accessed.
 
 Before launching KPSS, we need to forward the appropriate ports for KPSS.
 -The miner will run on the Windows box and needs access to the KPSS VM (on port 3333 if you 
@@ -136,7 +142,7 @@ values. If it ends prematurely with the "default_witness_commitment" value then 
 ## Mining
 
 
-To run KPSS, enter the following on the KPSS VM:
+To run KPSS, enter the following on the KPSS VM from directory "~/kawpow_personal_stratum_server":
 
 	node server.js
 	
